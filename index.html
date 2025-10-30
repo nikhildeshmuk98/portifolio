@@ -115,6 +115,116 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1002;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-left: 1px solid var(--glass-border);
+            z-index: 1001;
+            padding: 5rem 2rem 2rem;
+            transition: right 0.4s ease;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .mobile-nav-btn:hover, .mobile-nav-btn.active {
+            background: var(--accent-green);
+            color: var(--text-white);
+            transform: translateX(10px);
+            border-color: var(--light-green);
+        }
+
+        .mobile-nav-btn i {
+            font-size: 1.2rem;
+            width: 25px;
+        }
+
+        .mobile-settings {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .mobile-settings-btn {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .mobile-settings-btn:hover {
+            background: var(--accent-green);
+            color: var(--text-white);
+            transform: translateX(10px);
+        }
+
+        .mobile-settings-btn i {
+            font-size: 1.2rem;
+            width: 25px;
+        }
+
         /* Settings Menu */
         .settings-container {
             position: relative;
@@ -993,17 +1103,13 @@
         }
 
         /* Projects Section */
-        .projects-section {
-            padding: 80px 10%;
-            background: radial-gradient(circle at top left, #001f1f, #000);
-            color: #fff;
-            text-align: center;
+        #projects {
+            padding: 80px 5%;
         }
 
         .projects-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            flex-direction: column;
             gap: 40px;
             margin-top: 40px;
         }
@@ -1014,11 +1120,16 @@
             backdrop-filter: blur(20px);
             border-radius: 20px;
             box-shadow: 0 8px 25px rgba(0, 255, 255, 0.15);
-            padding: 25px;
-            width: 350px;
+            padding: 30px;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
             transition: all 0.4s ease;
-            text-align: center;
+            text-align: left;
             border: 1px solid rgba(0, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
         .project-card:hover {
@@ -1029,16 +1140,15 @@
         /* Project Image */
         .project-img {
             width: 100%;
-            height: 200px;
+            height: 250px;
             object-fit: cover;
             border-radius: 15px;
-            margin-bottom: 20px;
             box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
         }
 
         /* Project Title */
         .project-title {
-            font-size: 1.4em;
+            font-size: 1.6em;
             color: #00ffff;
             margin-bottom: 10px;
             letter-spacing: 1px;
@@ -1046,7 +1156,7 @@
 
         /* Project Description */
         .project-description {
-            font-size: 0.95em;
+            font-size: 1em;
             color: #d9f9f9;
             line-height: 1.6;
             margin-bottom: 15px;
@@ -1055,7 +1165,6 @@
         /* Tech Stack Tags */
         .project-tech {
             display: flex;
-            justify-content: center;
             flex-wrap: wrap;
             gap: 10px;
             margin-bottom: 20px;
@@ -1079,7 +1188,6 @@
         /* Buttons */
         .project-buttons {
             display: flex;
-            justify-content: center;
             gap: 15px;
         }
 
@@ -1346,6 +1454,10 @@
                 display: none;
             }
             
+            .mobile-menu-btn {
+                display: block;
+            }
+            
             .hero-left h1 {
                 font-size: 2.3rem;
             }
@@ -1370,13 +1482,13 @@
                 margin-top: 2rem;
             }
             
-            .projects-container {
-                flex-direction: column;
-                align-items: center;
+            .project-card {
+                width: 100%;
+                padding: 20px;
             }
             
-            .project-card {
-                width: 90%;
+            .project-buttons {
+                flex-direction: column;
             }
             
             .cert-img {
@@ -1385,6 +1497,10 @@
             
             .language-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .project-card {
+                flex-direction: column;
             }
         }
 
@@ -1432,6 +1548,10 @@
             .language-option {
                 padding: 1.5rem 1rem;
             }
+            
+            .project-img {
+                height: 200px;
+            }
         }
     </style>
 </head>
@@ -1443,12 +1563,12 @@
             <h2>Nikhil Dandolu</h2>
         </div>
         <div class="nav-right">
-           <a href="home.html" class="nav-btn active"><i class="fas fa-home"></i> <span>Home</span></a>
-<a href="About.html" class="nav-btn"><i class="fas fa-user"></i> <span>About</span></a>
-<a href="Skills.html" class="nav-btn"><i class="fas fa-code"></i> <span>Skills</span></a>
-<a href="Projects.html" class="nav-btn"><i class="fas fa-project-diagram"></i> <span>Projects</span></a>
-<a href="Certifications.html" class="nav-btn"><i class="fas fa-certificate"></i> <span>Certifications</span></a>
-<a href="Contact.html" class="nav-btn"><i class="fas fa-envelope"></i> <span>Contact</span></a>
+           <a href="index.html" class="nav-btn"><i class="fas fa-home"></i> <span>Home</span></a>
+  <a href="about.html" class="nav-btn"><i class="fas fa-user"></i> <span>About</span></a>
+  <a href="skills.html" class="nav-btn"><i class="fas fa-code"></i> <span>Skills</span></a>
+  <a href="projects.html" class="nav-btn"><i class="fas fa-project-diagram"></i> <span>Projects</span></a>
+  <a href="certifications.html" class="nav-btn"><i class="fas fa-certificate"></i> <span>Certifications</span></a>
+  <a href="contact.html" class="nav-btn"><i class="fas fa-envelope"></i> <span>Contact</span></a>
 
             <!-- Settings Button -->
             <div class="settings-container">
@@ -1471,7 +1591,56 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
     </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home" class="mobile-nav-btn active" data-section="home">
+            <i class="fas fa-home"></i>
+            <span data-translate="home">Home</span>
+        </a>
+        <a href="#about" class="mobile-nav-btn" data-section="about">
+            <i class="fas fa-user"></i>
+            <span data-translate="about">About</span>
+        </a>
+        <a href="#skills" class="mobile-nav-btn" data-section="skills">
+            <i class="fas fa-code"></i>
+            <span data-translate="skills">Skills</span>
+        </a>
+        <a href="#projects" class="mobile-nav-btn" data-section="projects">
+            <i class="fas fa-project-diagram"></i>
+            <span data-translate="projects">Projects</span>
+        </a>
+        <a href="#certifications" class="mobile-nav-btn" data-section="certifications">
+            <i class="fas fa-certificate"></i>
+            <span data-translate="certifications">Certifications</span>
+        </a>
+        <a href="#contact" class="mobile-nav-btn" data-section="contact">
+            <i class="fas fa-envelope"></i>
+            <span data-translate="contact">Contact</span>
+        </a>
+        
+        <div class="mobile-settings">
+            <button class="mobile-settings-btn" id="mobileThemeToggle">
+                <i class="fas fa-palette"></i>
+                <span data-translate="lightMode">Light Mode</span>
+            </button>
+            <button class="mobile-settings-btn" id="mobileSearchToggle">
+                <i class="fas fa-search"></i>
+                <span data-translate="search">Search</span>
+            </button>
+            <button class="mobile-settings-btn" id="mobileLanguageToggle">
+                <i class="fas fa-globe"></i>
+                <span data-translate="language">Language</span>
+            </button>
+        </div>
+    </div>
 
     <!-- Search Modal -->
     <div class="search-modal" id="searchModal">
@@ -1769,70 +1938,73 @@
     </section>
 
     <!-- Projects Section -->
-    <section class="projects-section" id="projects">
+    <section id="projects">
         <h2 class="section-title" data-translate="myProjects">My <span>Projects</span></h2>
         <div class="projects-container">
             <!-- Project 1: E-commerce Website -->
             <div class="project-card">
                 <img src="images/grocery store.png" alt="Fresh Mart Grocery Store" class="project-img">
-                <h3 class="project-title">Fresh Mart - Grocery Store</h3>
-                <p class="project-description" data-translate="project1Desc">
-                    A fully responsive e-commerce website for a grocery store with product catalog, shopping cart, 
-                    user authentication, and payment integration. Built with modern web technologies for a seamless shopping experience.
-                </p>
-                <div class="project-tech">
-                    <span class="tech-tag">HTML5</span>
-                    <span class="tech-tag">CSS3</span>
-                    <span class="tech-tag">JavaScript</span>
-                </div>
-                <div class="project-buttons">
-                    <a href="https://github.com/nikhildeshmuk98" class="project-btn github-btn" target="_blank">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                    <a href="https://fresh-mart-nikhil.vercel.app/" class="project-btn demo-btn" target="_blank">
-                        <i class="fas fa-external-link-alt"></i> <span data-translate="liveDemo">Live Demo</span>
-                    </a>
+                <div class="project-content">
+                    <h3 class="project-title">Fresh Mart - Grocery Store</h3>
+                    <p class="project-description" data-translate="project1Desc">
+                        A fully responsive e-commerce website for a grocery store with product catalog, shopping cart, 
+                        user authentication, and payment integration. Built with modern web technologies for a seamless shopping experience.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <div class="project-buttons">
+                        <a href="https://github.com/nikhildeshmuk98" class="project-btn github-btn" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        <a href="https://fresh-mart-nikhil.vercel.app/" class="project-btn demo-btn" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> <span data-translate="liveDemo">Live Demo</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             
             <!-- Project 2: Portfolio Website -->
             <div class="project-card">
                 <img src="images/portfolio (2).png" alt="Portfolio Website" class="project-img">
-                <h3 class="project-title" data-translate="portfolioWebsite">Portfolio Website</h3>
-                <p class="project-description" data-translate="project2Desc">
-                    A modern, responsive portfolio website showcasing home,about,skills, projects, and certificationsand contact. 
-                    Features smooth animations, dark green and black theme glassmorphism background, and optimized performance for all devices.
-                </p>
-                <div class="project-tech">
-                    <span class="tech-tag">HTML5</span>
-                    <span class="tech-tag">CSS3</span>
-                    <span class="tech-tag">JavaScript</span>
-                </div>
-                <div class="project-buttons">
-                    <a href="https://github.com/nikhildeshmuk98" class="project-btn github-btn" target="_blank">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                    <a href="https://portifolio-nikhil.vercel.app/" class="project-btn demo-btn" target="_blank">
-                        <i class="fas fa-external-link-alt"></i> <span data-translate="liveDemo">Live Demo</span>
-                    </a>
-                </div>
-            </div>
-               <!-- Project 2: health & hygenic -->
-                <div class="glass-card" style="transition-delay: 0.3s">
-                    <img src="images/health and hygenic.png" 
-                         alt="Health & Hyhenic" class="project-img">
-                    <h3 class="project-title">Health & Hygenic</h3>
-                   <p class="project-description">
-    A community service project focused on promoting health and hygiene awareness among rural villagers. 
-    The initiative included interactive sessions, demonstrations on proper handwashing techniques, and discussions on sanitation and healthy living practices. 
-    Emphasizes teamwork, social responsibility, and real-world community engagement for a positive social impact.
-</p>
-
+                <div class="project-content">
+                    <h3 class="project-title" data-translate="portfolioWebsite">Portfolio Website</h3>
+                    <p class="project-description" data-translate="project2Desc">
+                        A modern, responsive portfolio website showcasing home,about,skills, projects, and certificationsand contact. 
+                        Features smooth animations, dark green and black theme glassmorphism background, and optimized performance for all devices.
+                    </p>
                     <div class="project-tech">
                         <span class="tech-tag">HTML5</span>
                         <span class="tech-tag">CSS3</span>
                         <span class="tech-tag">JavaScript</span>
-                       
+                    </div>
+                    <div class="project-buttons">
+                        <a href="https://github.com/nikhildeshmuk98" class="project-btn github-btn" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        <a href="https://portifolio-nikhil.vercel.app/" class="project-btn demo-btn" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> <span data-translate="liveDemo">Live Demo</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 3: Health & Hygenic -->
+            <div class="project-card">
+                <img src="images/health and hygenic.png" alt="Health & Hyhenic" class="project-img">
+                <div class="project-content">
+                    <h3 class="project-title">Health & Hygenic</h3>
+                    <p class="project-description">
+                        A community service project focused on promoting health and hygiene awareness among rural villagers. 
+                        The initiative included interactive sessions, demonstrations on proper handwashing techniques, and discussions on sanitation and healthy living practices. 
+                        Emphasizes teamwork, social responsibility, and real-world community engagement for a positive social impact.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
                     </div>
                     <div class="project-buttons">
                         <a href="https://github.com/nikhildeshmuk98" class="project-btn github-btn" target="_blank">
@@ -1843,6 +2015,7 @@
                         </a>
                     </div>
                 </div>
+            </div>
         </div>
     </section>
 
@@ -2203,10 +2376,13 @@
             
             // Update theme toggle text if needed
             const themeText = document.querySelector('#themeToggle span');
+            const mobileThemeText = document.querySelector('#mobileThemeToggle span');
             if (document.body.classList.contains('light-mode')) {
-                themeText.textContent = translations[lang].darkMode;
+                if (themeText) themeText.textContent = translations[lang].darkMode;
+                if (mobileThemeText) mobileThemeText.textContent = translations[lang].darkMode;
             } else {
-                themeText.textContent = translations[lang].lightMode;
+                if (themeText) themeText.textContent = translations[lang].lightMode;
+                if (mobileThemeText) mobileThemeText.textContent = translations[lang].lightMode;
             }
         }
 
@@ -2313,6 +2489,7 @@
             let current = '';
             const sections = document.querySelectorAll('section');
             const navButtons = document.querySelectorAll('.nav-btn');
+            const mobileNavButtons = document.querySelectorAll('.mobile-nav-btn');
             
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
@@ -2323,6 +2500,13 @@
             });
             
             navButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('href') === `#${current}`) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            mobileNavButtons.forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.getAttribute('href') === `#${current}`) {
                     btn.classList.add('active');
@@ -2346,6 +2530,34 @@
             });
         });
 
+        // Mobile Menu Functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const mobileNavButtons = document.querySelectorAll('.mobile-nav-btn');
+        
+        // Toggle mobile menu
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            mobileMenuOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Close mobile menu
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            mobileMenuOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close mobile menu when clicking overlay
+        mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+        
+        // Close mobile menu when clicking a nav button
+        mobileNavButtons.forEach(btn => {
+            btn.addEventListener('click', closeMobileMenu);
+        });
+
         // Settings Menu Functionality
         const settingsBtn = document.getElementById('settingsBtn');
         const settingsMenu = document.getElementById('settingsMenu');
@@ -2359,6 +2571,11 @@
         const searchInput = document.getElementById('searchInput');
         const searchResults = document.getElementById('searchResults');
         const languageOptions = document.querySelectorAll('.language-option');
+
+        // Mobile settings buttons
+        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+        const mobileSearchToggle = document.getElementById('mobileSearchToggle');
+        const mobileLanguageToggle = document.getElementById('mobileLanguageToggle');
 
         // Toggle settings menu
         settingsBtn.addEventListener('click', (e) => {
@@ -2377,23 +2594,34 @@
         });
 
         // Theme toggle functionality
-        themeToggle.addEventListener('click', () => {
+        function toggleTheme() {
             document.body.classList.toggle('light-mode');
             const themeText = themeToggle.querySelector('span');
+            const mobileThemeText = mobileThemeToggle.querySelector('span');
             if (document.body.classList.contains('light-mode')) {
-                themeText.textContent = translations[currentLanguage].darkMode;
+                if (themeText) themeText.textContent = translations[currentLanguage].darkMode;
+                if (mobileThemeText) mobileThemeText.textContent = translations[currentLanguage].darkMode;
             } else {
-                themeText.textContent = translations[currentLanguage].lightMode;
+                if (themeText) themeText.textContent = translations[currentLanguage].lightMode;
+                if (mobileThemeText) mobileThemeText.textContent = translations[currentLanguage].lightMode;
             }
             settingsMenu.classList.remove('active');
-        });
+            closeMobileMenu();
+        }
+
+        themeToggle.addEventListener('click', toggleTheme);
+        mobileThemeToggle.addEventListener('click', toggleTheme);
 
         // Search functionality
-        searchToggle.addEventListener('click', () => {
+        function openSearch() {
             searchModal.classList.add('active');
             settingsMenu.classList.remove('active');
+            closeMobileMenu();
             searchInput.focus();
-        });
+        }
+
+        searchToggle.addEventListener('click', openSearch);
+        mobileSearchToggle.addEventListener('click', openSearch);
 
         closeSearch.addEventListener('click', () => {
             searchModal.classList.remove('active');
@@ -2411,10 +2639,14 @@
         });
 
         // Language functionality
-        languageToggle.addEventListener('click', () => {
+        function openLanguage() {
             languageModal.classList.add('active');
             settingsMenu.classList.remove('active');
-        });
+            closeMobileMenu();
+        }
+
+        languageToggle.addEventListener('click', openLanguage);
+        mobileLanguageToggle.addEventListener('click', openLanguage);
 
         closeLanguage.addEventListener('click', () => {
             languageModal.classList.remove('active');
@@ -2547,7 +2779,7 @@
                     window.scrollTo({
                         top: targetElement.offsetTop - 80,
                         behavior: 'smooth'
-                    });
+                    });  
                 }
             });
         });
