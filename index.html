@@ -48,6 +48,13 @@
             color: var(--text-light);
             overflow-x: hidden;
             transition: all 0.5s ease;
+            min-height: 100vh;
+        }
+
+        /* Page Content Container */
+        .page-content {
+            padding-top: 80px;
+            min-height: calc(100vh - 80px);
         }
 
         /* Navigation Bar */
@@ -585,20 +592,12 @@
 
         /* Hero Section */
         #home {
-            min-height: 100vh;
-            padding: 8rem 5% 5rem;
+            min-height: calc(100vh - 80px);
+            padding: 5rem 5% 3rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             position: relative;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1s ease, transform 1s ease;
-        }
-
-        #home.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .hero-left {
@@ -754,15 +753,7 @@
 
         /* Section Styling */
         section {
-            padding: 6rem 5%;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 1s ease, transform 1s ease;
-        }
-
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
+            padding: 4rem 5%;
         }
 
         .section-title {
@@ -795,10 +786,6 @@
         }
 
         /* About Section */
-        #about {
-            padding-top: 4rem;
-        }
-
         .about-container {
             display: flex;
             gap: 3rem;
@@ -1414,6 +1401,40 @@
             transform: translateY(-5px);
         }
 
+        /* Page Transition */
+        .page-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-dark);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .page-transition.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(46, 139, 87, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent-green);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         /* Responsive Design */
         @media (max-width: 1200px) {
             .hero-left h1 {
@@ -1469,7 +1490,7 @@
             #home {
                 flex-direction: column;
                 text-align: center;
-                padding-top: 6rem;
+                padding-top: 3rem;
             }
             
             .hero-left, .hero-right {
@@ -1556,6 +1577,11 @@
     </style>
 </head>
 <body>
+    <!-- Page Transition -->
+    <div class="page-transition" id="pageTransition">
+        <div class="loading-spinner"></div>
+    </div>
+
     <!-- Navigation Bar -->
     <nav>
         <div class="nav-left">
@@ -1563,12 +1589,12 @@
             <h2>Nikhil Dandolu</h2>
         </div>
         <div class="nav-right">
-           <a href="index.html" class="nav-btn"><i class="fas fa-home"></i> <span>Home</span></a>
-  <a href="about.html" class="nav-btn"><i class="fas fa-user"></i> <span>About</span></a>
-  <a href="skills.html" class="nav-btn"><i class="fas fa-code"></i> <span>Skills</span></a>
-  <a href="projects.html" class="nav-btn"><i class="fas fa-project-diagram"></i> <span>Projects</span></a>
-  <a href="certifications.html" class="nav-btn"><i class="fas fa-certificate"></i> <span>Certifications</span></a>
-  <a href="contact.html" class="nav-btn"><i class="fas fa-envelope"></i> <span>Contact</span></a>
+            <a href="index.html" class="nav-btn active"><i class="fas fa-home"></i> <span>Home</span></a>
+            <a href="about.html" class="nav-btn"><i class="fas fa-user"></i> <span>About</span></a>
+            <a href="skills.html" class="nav-btn"><i class="fas fa-code"></i> <span>Skills</span></a>
+            <a href="projects.html" class="nav-btn"><i class="fas fa-project-diagram"></i> <span>Projects</span></a>
+            <a href="certifications.html" class="nav-btn"><i class="fas fa-certificate"></i> <span>Certifications</span></a>
+            <a href="contact.html" class="nav-btn"><i class="fas fa-envelope"></i> <span>Contact</span></a>
 
             <!-- Settings Button -->
             <div class="settings-container">
@@ -1601,30 +1627,30 @@
     <!-- Mobile Menu -->
     <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
     <div class="mobile-menu" id="mobileMenu">
-      <a href="index.html" class="mobile-nav-btn active" data-section="home">
-      <i class="fas fa-home"></i>
-      <span data-translate="home">Home</span>
-  </a>
-  <a href="about.html" class="mobile-nav-btn" data-section="about">
-      <i class="fas fa-user"></i>
-      <span data-translate="about">About</span>
-  </a>
-  <a href="skills.html" class="mobile-nav-btn" data-section="skills">
-      <i class="fas fa-code"></i>
-      <span data-translate="skills">Skills</span>
-  </a>
-  <a href="projects.html" class="mobile-nav-btn" data-section="projects">
-      <i class="fas fa-project-diagram"></i>
-      <span data-translate="projects">Projects</span>
-  </a>
-  <a href="certifications.html" class="mobile-nav-btn" data-section="certifications">
-      <i class="fas fa-certificate"></i>
-      <span data-translate="certifications">Certifications</span>
-  </a>
-  <a href="contact.html" class="mobile-nav-btn" data-section="contact">
-      <i class="fas fa-envelope"></i>
-      <span data-translate="contact">Contact</span>
-  </a>
+        <a href="index.html" class="mobile-nav-btn active" data-section="home">
+            <i class="fas fa-home"></i>
+            <span data-translate="home">Home</span>
+        </a>
+        <a href="about.html" class="mobile-nav-btn" data-section="about">
+            <i class="fas fa-user"></i>
+            <span data-translate="about">About</span>
+        </a>
+        <a href="skills.html" class="mobile-nav-btn" data-section="skills">
+            <i class="fas fa-code"></i>
+            <span data-translate="skills">Skills</span>
+        </a>
+        <a href="projects.html" class="mobile-nav-btn" data-section="projects">
+            <i class="fas fa-project-diagram"></i>
+            <span data-translate="projects">Projects</span>
+        </a>
+        <a href="certifications.html" class="mobile-nav-btn" data-section="certifications">
+            <i class="fas fa-certificate"></i>
+            <span data-translate="certifications">Certifications</span>
+        </a>
+        <a href="contact.html" class="mobile-nav-btn" data-section="contact">
+            <i class="fas fa-envelope"></i>
+            <span data-translate="contact">Contact</span>
+        </a>
         
         <div class="mobile-settings">
             <button class="mobile-settings-btn" id="mobileThemeToggle">
@@ -1685,372 +1711,25 @@
         </div>
     </div>
 
-    <!-- Home/Hero Section -->
-    <section id="home">
-        <div class="hero-left">
-            <h1 data-translate="hiIm">Hi, I'm <span>Nikhil Dandolu</span></h1>
-            <div class="typing-text" id="typing-text"></div>
-            <p data-translate="intro1">I'm a passionate Frontend Developer and B.Tech Information Technology student (2022–2026) at NBKR Institute of Science & Technology, driven by a deep interest in Data Analytics and Artificial Intelligence.</p>
-            <p data-translate="intro2">I specialize in crafting beautiful, responsive, and user-friendly web applications while leveraging data-driven insights to build smarter, more impactful digital experiences.</p>
-            <div class="hero-btns">
-                <a href="images/Nikhil_Resume.pdf" class="btn btn-primary" target="_blank">
-                    <i class="fas fa-download"></i> 
-                    <span data-translate="downloadResume">Download Resume</span>
-                </a>
-                <a href="#contact" class="btn btn-secondary"><i class="fas fa-paper-plane"></i> <span data-translate="contactMe">Contact Me</span></a>
-            </div>
-        </div>
-        <div class="hero-right">
-            <img src="images/nikhildeshmuk.png" alt="Nikhil Dandolu" class="hero-profile">
-            <div class="social-icons">
-                <a href="https://github.com/nikhildeshmuk98" class="social-icon" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="https://in.linkedin.com/in/nikhil-dandolu-a9122b33b" class="social-icon" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="https://wa.me/916309872249" class="social-icon" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-                <a href="https://www.instagram.com/nikhil_deshmuk_14" class="social-icon" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-instagram"></i>
-                </a>
-            </div>
-            <div class="floating-icons">
-                <i class="fab fa-html5 floating-icon" style="top: 10%; left: 10%; animation-delay: 0s;"></i>
-                <i class="fab fa-css3-alt floating-icon" style="top: 20%; right: 15%; animation-delay: 1s;"></i>
-                <i class="fab fa-js floating-icon" style="bottom: 30%; left: 5%; animation-delay: 2s;"></i>
-                <i class="fab fa-react floating-icon" style="bottom: 10%; right: 20%; animation-delay: 3s;"></i>
-                <i class="fab fa-python floating-icon" style="top: 40%; right: 5%; animation-delay: 4s;"></i>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about">
-        <h2 class="section-title" data-translate="aboutMe">About <span>Me</span></h2>
-        <div class="about-container">
-            <img src="images/nikhildeshmuk.png" alt="Nikhil Dandolu" class="about-img">
-            <div class="about-text">
-                <h3 data-translate="whoAmI">Who Am I?</h3>
-                <p>💫 <span data-translate="aboutDesc1">I'm a passionate Frontend Developer and B.Tech Information Technology student (2022–2026) at NBKR Institute of Science & Technology, with a deep interest in Data Analytics and Artificial Intelligence.</span></p>
-                <p> 🌐 <span data-translate="aboutDesc2">I love designing and developing interactive, responsive, and user-friendly web applications that bring ideas to life through clean code and creative design.</span></p>
-                <p> 🧠 <span data-translate="aboutDesc3">With expertise in HTML, CSS, JavaScript, Python, Data Visualization, and MySQL, I bridge the gap between data and design — creating intelligent, data-driven digital experiences.</span></p>
-                <p> 🚀 <span data-translate="aboutDesc4">Always eager to explore emerging technologies and tackle new challenges, I strive to build impactful solutions that blend innovation, aesthetics, and functionality.</span></p>
-                <p> 🎯 <span data-translate="aboutDesc5">When I'm not coding, I enjoy exploring new tools, contributing to open-source projects, and continuously learning to push the boundaries of what's possible</span></p>
-            </div>
-        </div>
-        
-        <div class="about-cards">
-            <div class="glass-card about-card">
-                <h4><i class="fas fa-id-card"></i> <span data-translate="myDetails">My Details</span></h4>
-                <ul>
-                    <li><i class="fas fa-user"></i> <span data-translate="name">Name</span>: Nikhil Dandolu</li>
-                    <li><i class="fas fa-birthday-cake"></i> <span data-translate="age">Age</span>: 22</li>
-                    <li><i class="fas fa-calendar"></i> <span data-translate="dob">DOB</span>: 14th Feburary, 2004</li>
-                    <li><i class="fas fa-venus-mars"></i> <span data-translate="gender">Gender</span>: Male</li>
-                </ul>
-            </div>
-            <div class="glass-card about-card">
-                <h4><i class="fas fa-address-book"></i> <span data-translate="contactDetails">Contact Details</span></h4>
-                <ul>
-                    <li><i class="fas fa-envelope"></i> nikhildeshmuk98@gmail.com</li>
-                    <li><i class="fas fa-phone"></i> +91 6309872249</li>
-                    <li><i class="fas fa-map-marker-alt"></i> <span data-translate="location">Muttembaka, India</span></li>
-                    <li><i class="fab fa-linkedin"></i> linkedin.com/in/nikhil-dandolu-a9122b33b</li>
-                </ul>
-            </div>
-            <div class="glass-card about-card">
-                <h4><i class="fas fa-heart"></i> <span data-translate="hobbies">Hobbies</span></h4>
-                <ul>
-                    <li><i class="fas fa-book"></i> <span data-translate="reading">Reading</span></li>
-                    <li><i class="fas fa-code"></i> <span data-translate="coding">Coding</span></li>
-                    <li><i class="fas fa-gamepad"></i> <span data-translate="gaming">Gaming</span></li>
-                    <li><i class="fas fa-plane"></i> <span data-translate="travelling">Travelling</span></li>
-                    <li><i class="fas fa-music"></i> <span data-translate="music">Music</span></li>
-                </ul>
-            </div>
-        </div>
-        
-        <h2 class="section-title" data-translate="educationalBackground">Educational <span>Background</span></h2>
-        <div class="education-cards">
-            <div class="glass-card education-card">
-                <i class="fas fa-graduation-cap education-icon"></i>
-                <h4 data-translate="btech">B.Tech in Information Technology</h4>
-                <p data-translate="nbkr">N.B.K.R Institute Of Science & Technology Vidyanagar</p>
-                <p>2022 - 2026</p>
-                <p data-translate="cgpa">CGPA: 7.32</p>
-            </div>
-            <div class="glass-card education-card">
-                <i class="fas fa-school education-icon"></i>
-                <h4 data-translate="intermediate">Intermediate</h4>
-                <p data-translate="srinivasa">Srinivasa Junior College Vidyanagar</p>
-                <p>2020 - 2022</p>
-                <p data-translate="percentage">Percentage: 80.4%</p>
-            </div>
-            <div class="glass-card education-card">
-                <i class="fas fa-book education-icon"></i>
-                <h4 data-translate="school">School</h4>
-                <p data-translate="balaBharathi">Bala Bharathi EM High School Vidyanagar</p>
-                <p>2019 - 2020</p>
-                <p data-translate="gpa">GPA: 9.8</p>
-            </div>
-        </div>
-        
-        <h2 class="section-title" data-translate="myFamily">My <span>Family</span></h2>
-        <div class="family-cards">
-            <div class="glass-card family-card">
-                <img src="images/karunakar.png" alt="Father" class="family-img">
-                <h4 data-translate="father">Father</h4>
-                <p>Karunakar Dandolu</p>
-                <p data-translate="farmer">Farmer</p>
-            </div>
-            <div class="glass-card family-card">
-                <img src="images/sujatha.png" alt="Mother" class="family-img">
-                <h4 data-translate="mother">Mother</h4>
-                <p>Sujatha Dandolu</p>
-                <p data-translate="homemaker">Homemaker</p>
-            </div>
-            <div class="glass-card family-card">
-                <img src="images/divya.png" alt="Sister" class="family-img">
-                <h4 data-translate="sister">Sister</h4>
-                <p>Divya Dandolu</p>
-                <p data-translate="csStudent">Computer Science Student</p>
-            </div>
-            <div class="glass-card family-card">
-                <img src="images/nikhildeshmuk.png" alt="Me" class="family-img">
-                <h4 data-translate="me">Me</h4>
-                <p>Nikhil Dandolu</p>
-                <p data-translate="frontendDeveloper">Frontend Developer</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills">
-        <h2 class="section-title" data-translate="mySkills">My <span>Skills</span></h2>
-        <div class="skills-container">
-            <div class="glass-card skills-card">
-                <h3 data-translate="technicalSkills">Technical Skills</h3>
-                <div class="skill-category">
-                    <h4 data-translate="frontendSkills">Frontend Skills</h4>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <i class="fab fa-html5 skill-icon"></i>
-                            <p>HTML5</p>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-css3-alt skill-icon"></i>
-                            <p>CSS3</p>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-js skill-icon"></i>
-                            <p>JavaScript</p>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-react skill-icon"></i>
-                            <p>React</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h4 data-translate="backendSkills">Backend Skills</h4>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <i class="fab fa-python skill-icon"></i>
-                            <p>Python</p>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-code skill-icon"></i>
-                            <p>Django</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h4 data-translate="toolsDatabase">Tools & DataBase</h4>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <i class="fas fa-code skill-icon"></i>
-                            <p>VS Code</p>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-git skill-icon"></i>
-                            <p>Git</p>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-github skill-icon"></i>
-                            <p>GitHub</p>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-file-excel skill-icon"></i>
-                            <p>Excel</p>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-chart-bar skill-icon"></i>
-                            <p>Power BI</p>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-database skill-icon"></i>
-                            <p>MySQL</p>
-                        </div>
-                    </div>
+    <!-- Page Content -->
+    <div class="page-content">
+        <!-- Home/Hero Section -->
+        <section id="home">
+            <div class="hero-left">
+                <h1 data-translate="hiIm">Hi, I'm <span>Nikhil Dandolu</span></h1>
+                <div class="typing-text" id="typing-text"></div>
+                <p data-translate="intro1">I'm a passionate Frontend Developer and B.Tech Information Technology student (2022–2026) at NBKR Institute of Science & Technology, driven by a deep interest in Data Analytics and Artificial Intelligence.</p>
+                <p data-translate="intro2">I specialize in crafting beautiful, responsive, and user-friendly web applications while leveraging data-driven insights to build smarter, more impactful digital experiences.</p>
+                <div class="hero-btns">
+                    <a href="images/Nikhil_Resume.pdf" class="btn btn-primary" target="_blank">
+                        <i class="fas fa-download"></i> 
+                        <span data-translate="downloadResume">Download Resume</span>
+                    </a>
+                    <a href="contact.html" class="btn btn-secondary"><i class="fas fa-paper-plane"></i> <span data-translate="contactMe">Contact Me</span></a>
                 </div>
             </div>
-            <!-- Soft Skills Card -->
-            <div class="glass-card skills-card">
-                <h3><i class="fas fa-users"></i> <span data-translate="softSkills">Soft Skills</span></h3>
-                <div class="soft-skills">
-                    <div class="soft-skill" data-skill="problem-solving">
-                        <i class="fas fa-puzzle-piece soft-skill-icon" style="color:#ff6b6b;"></i>
-                        <p data-translate="problemSolving">Problem Solving</p>
-                    </div>
-                    <div class="soft-skill" data-skill="communication">
-                        <i class="fas fa-comments soft-skill-icon" style="color:#4dabf7;"></i>
-                        <p data-translate="communication">Communication</p>
-                    </div>
-                    <div class="soft-skill" data-skill="teamwork">
-                        <i class="fas fa-people-group soft-skill-icon" style="color:#51cf66;"></i>
-                        <p data-translate="teamwork">Teamwork</p>
-                    </div>
-                    <div class="soft-skill" data-skill="adaptability">
-                        <i class="fas fa-sync-alt soft-skill-icon" style="color:#ffd43b;"></i>
-                        <p data-translate="adaptability">Adaptability</p>
-                    </div>
-                    <div class="soft-skill" data-skill="time-management">
-                        <i class="fas fa-clock soft-skill-icon" style="color:#845ef7;"></i>
-                        <p data-translate="timeManagement">Time Management</p>
-                    </div>
-                    <div class="soft-skill" data-skill="creativity">
-                        <i class="fas fa-lightbulb soft-skill-icon" style="color:#f783ac;"></i>
-                        <p data-translate="creativity">Creativity</p>
-                    </div>
-                    <div class="soft-skill" data-skill="leadership">
-                        <i class="fas fa-crown soft-skill-icon" style="color:#ffa94d;"></i>
-                        <p data-translate="leadership">Leadership</p>
-                    </div>
-                    <div class="soft-skill" data-skill="critical-thinking">
-                        <i class="fas fa-brain soft-skill-icon" style="color:#63e6be;"></i>
-                        <p data-translate="criticalThinking">Critical Thinking</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects">
-        <h2 class="section-title" data-translate="myProjects">My <span>Projects</span></h2>
-        <div class="projects-container">
-            <!-- Project 1: E-commerce Website -->
-            <div class="project-card">
-                <img src="images/grocery store.png" alt="Fresh Mart Grocery Store" class="project-img">
-                <div class="project-content">
-                    <h3 class="project-title">Fresh Mart - Grocery Store</h3>
-                    <p class="project-description" data-translate="project1Desc">
-                        A fully responsive e-commerce website for a grocery store with product catalog, shopping cart, 
-                        user authentication, and payment integration. Built with modern web technologies for a seamless shopping experience.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">HTML5</span>
-                        <span class="tech-tag">CSS3</span>
-                        <span class="tech-tag">JavaScript</span>
-                    </div>
-                    <div class="project-buttons">
-                        <a href="https://github.com/nikhildeshmuk98" class="project-btn github-btn" target="_blank">
-                            <i class="fab fa-github"></i> GitHub
-                        </a>
-                        <a href="https://fresh-mart-nikhil.vercel.app/" class="project-btn demo-btn" target="_blank">
-                            <i class="fas fa-external-link-alt"></i> <span data-translate="liveDemo">Live Demo</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Project 2: Portfolio Website -->
-            <div class="project-card">
-                <img src="images/portfolio (2).png" alt="Portfolio Website" class="project-img">
-                <div class="project-content">
-                    <h3 class="project-title" data-translate="portfolioWebsite">Portfolio Website</h3>
-                    <p class="project-description" data-translate="project2Desc">
-                        A modern, responsive portfolio website showcasing home,about,skills, projects, and certificationsand contact. 
-                        Features smooth animations, dark green and black theme glassmorphism background, and optimized performance for all devices.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">HTML5</span>
-                        <span class="tech-tag">CSS3</span>
-                        <span class="tech-tag">JavaScript</span>
-                    </div>
-                    <div class="project-buttons">
-                        <a href="https://github.com/nikhildeshmuk98" class="project-btn github-btn" target="_blank">
-                            <i class="fab fa-github"></i> GitHub
-                        </a>
-                        <a href="https://portifolio-nikhil.vercel.app/" class="project-btn demo-btn" target="_blank">
-                            <i class="fas fa-external-link-alt"></i> <span data-translate="liveDemo">Live Demo</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Project 3: Health & Hygenic -->
-            <div class="project-card">
-                <img src="images/health and hygenic.png" alt="Health & Hyhenic" class="project-img">
-                <div class="project-content">
-                    <h3 class="project-title">Health & Hygenic</h3>
-                    <p class="project-description">
-                        A community service project focused on promoting health and hygiene awareness among rural villagers. 
-                        The initiative included interactive sessions, demonstrations on proper handwashing techniques, and discussions on sanitation and healthy living practices. 
-                        Emphasizes teamwork, social responsibility, and real-world community engagement for a positive social impact.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">HTML5</span>
-                        <span class="tech-tag">CSS3</span>
-                        <span class="tech-tag">JavaScript</span>
-                    </div>
-                    <div class="project-buttons">
-                        <a href="https://github.com/nikhildeshmuk98" class="project-btn github-btn" target="_blank">
-                            <i class="fab fa-github"></i> GitHub
-                        </a>
-                        <a href="https://health-hygenic-nikhildeshmuk.vercel.app/" class="project-btn demo-btn" target="_blank">
-                            <i class="fas fa-external-link-alt"></i> Live Demo
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Certifications Section -->
-    <section id="certifications">
-        <h2 class="section-title" data-translate="myCertifications">My <span>Certifications</span></h2>
-        <div class="certifications-container">
-            <button class="carousel-btn carousel-prev"><i class="fas fa-chevron-left"></i></button>
-            <div class="cert-carousel">
-                <div class="glass-card cert-card">
-                    <img src="images/aspire.jpg" alt="Certification" class="cert-img">
-                    <h4 data-translate="dataAnalytics">Data Analytics</h4>
-                    <p data-translate="aspireIssued">Issued by: Aspire Primo Grad | Date: 16 June 2025 - 26 July 2025</p>
-                </div>
-                <div class="glass-card cert-card">
-                    <img src="images/IBM.png.jpg" alt="Certification" class="cert-img">
-                    <h4 data-translate="aiFundamentals">Artificial Intellegence Fundamentals</h4>
-                    <p data-translate="ibmIssued">Issued by: IBM | Date: 21 August 2025</p>
-                </div>
-                <div class="glass-card cert-card">
-                    <img src="images/nyreas.png.jpg" alt="Certification" class="cert-img">
-                    <h4 data-translate="artificialIntelligence">Artificial Intellegence</h4>
-                    <p data-translate="nyreasIssued">Issued by: Nyreas Edu Tech | Date: May 2022</p>
-                </div>
-            </div>
-            <button class="carousel-btn carousel-next"><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact">
-        <h2 class="section-title" data-translate="getInTouch">Get In <span>Touch</span></h2>
-        <div class="contact-container">
-            <div class="contact-left">
-                <img src="images/nikhildeshmuk.png" alt="Nikhil Dandolu" class="contact-profile">
+            <div class="hero-right">
+                <img src="images/nikhildeshmuk.png" alt="Nikhil Dandolu" class="hero-profile">
                 <div class="social-icons">
                     <a href="https://github.com/nikhildeshmuk98" class="social-icon" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-github"></i>
@@ -2065,76 +1744,16 @@
                         <i class="fab fa-instagram"></i>
                     </a>
                 </div>
-            </div>
-            <div class="contact-options">
-                <h3 style="color: var(--text-white); margin-bottom: 1.5rem;" data-translate="contactOptions">Contact Options</h3>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <div class="contact-info">
-                        <h4 data-translate="phone">Phone</h4>
-                        <p>+91 6309872249</p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <div class="contact-info">
-                        <h4 data-translate="email">Email</h4>
-                        <p>nikhildandolu14@gmail.com</p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div class="contact-info">
-                        <h4 data-translate="location">Location</h4>
-                        <p data-translate="locationDetail">Muttembaka, India</p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="contact-info">
-                        <h4 data-translate="availability">Availability</h4>
-                        <p data-translate="availabilityDetail">Mon - Fri, 9AM - 6PM</p>
-                    </div>
+                <div class="floating-icons">
+                    <i class="fab fa-html5 floating-icon" style="top: 10%; left: 10%; animation-delay: 0s;"></i>
+                    <i class="fab fa-css3-alt floating-icon" style="top: 20%; right: 15%; animation-delay: 1s;"></i>
+                    <i class="fab fa-js floating-icon" style="bottom: 30%; left: 5%; animation-delay: 2s;"></i>
+                    <i class="fab fa-react floating-icon" style="bottom: 10%; right: 20%; animation-delay: 3s;"></i>
+                    <i class="fab fa-python floating-icon" style="top: 40%; right: 5%; animation-delay: 4s;"></i>
                 </div>
             </div>
-            <div class="contact-right">
-                <!-- Glass Contact Form Card -->
-                <div class="contact-card">
-                    <form action="https://formspree.io/f/xblawdbq" method="POST">
-                        <h2>📩 <span data-translate="getInTouch">Get in Touch</span></h2>
-                        
-                        <div class="form-group">
-                            <input type="text" id="name" name="name" placeholder="Enter your name" required>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="text" id="subject" name="subject" placeholder="Enter subject">
-                        </div>
-
-                        <div class="form-group">
-                            <textarea id="message" name="message" placeholder="Type your message..." required></textarea>
-                        </div>
-
-                        <button type="submit" class="submit-btn">
-                            <span data-translate="sendMessage">Send Message</span> <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -2181,79 +1800,6 @@
                 intro2: "I specialize in crafting beautiful, responsive, and user-friendly web applications while leveraging data-driven insights to build smarter, more impactful digital experiences.",
                 downloadResume: "Download Resume",
                 contactMe: "Contact Me",
-                aboutMe: "About Me",
-                whoAmI: "Who Am I?",
-                aboutDesc1: "I'm a passionate Frontend Developer and B.Tech Information Technology student (2022–2026) at NBKR Institute of Science & Technology, with a deep interest in Data Analytics and Artificial Intelligence.",
-                aboutDesc2: "I love designing and developing interactive, responsive, and user-friendly web applications that bring ideas to life through clean code and creative design.",
-                aboutDesc3: "With expertise in HTML, CSS, JavaScript, Python, Data Visualization, and MySQL, I bridge the gap between data and design — creating intelligent, data-driven digital experiences.",
-                aboutDesc4: "Always eager to explore emerging technologies and tackle new challenges, I strive to build impactful solutions that blend innovation, aesthetics, and functionality.",
-                aboutDesc5: "When I'm not coding, I enjoy exploring new tools, contributing to open-source projects, and continuously learning to push the boundaries of what's possible",
-                myDetails: "My Details",
-                name: "Name",
-                age: "Age",
-                dob: "DOB",
-                gender: "Gender",
-                contactDetails: "Contact Details",
-                location: "Muttembaka, India",
-                hobbies: "Hobbies",
-                reading: "Reading",
-                coding: "Coding",
-                gaming: "Gaming",
-                travelling: "Travelling",
-                music: "Music",
-                educationalBackground: "Educational Background",
-                btech: "B.Tech in Information Technology",
-                nbkr: "N.B.K.R Institute Of Science & Technology Vidyanagar",
-                cgpa: "CGPA: 7.32",
-                intermediate: "Intermediate",
-                srinivasa: "Srinivasa Junior College Vidyanagar",
-                percentage: "Percentage: 80.4%",
-                school: "School",
-                balaBharathi: "Bala Bharathi EM High School Vidyanagar",
-                gpa: "GPA: 9.8",
-                myFamily: "My Family",
-                father: "Father",
-                farmer: "Farmer",
-                mother: "Mother",
-                homemaker: "Homemaker",
-                sister: "Sister",
-                csStudent: "Computer Science Student",
-                me: "Me",
-                frontendDeveloper: "Frontend Developer",
-                mySkills: "My Skills",
-                technicalSkills: "Technical Skills",
-                frontendSkills: "Frontend Skills",
-                backendSkills: "Backend Skills",
-                toolsDatabase: "Tools & DataBase",
-                softSkills: "Soft Skills",
-                problemSolving: "Problem Solving",
-                communication: "Communication",
-                teamwork: "Teamwork",
-                adaptability: "Adaptability",
-                timeManagement: "Time Management",
-                creativity: "Creativity",
-                leadership: "Leadership",
-                criticalThinking: "Critical Thinking",
-                myProjects: "My Projects",
-                project1Desc: "A fully responsive e-commerce website for a grocery store with product catalog, shopping cart, user authentication, and payment integration. Built with modern web technologies for a seamless shopping experience.",
-                project2Desc: "A modern, responsive portfolio website showcasing home,about,skills, projects, and certificationsand contact. Features smooth animations, dark green and black theme glassmorphism background, and optimized performance for all devices.",
-                liveDemo: "Live Demo",
-                portfolioWebsite: "Portfolio Website",
-                myCertifications: "My Certifications",
-                dataAnalytics: "Data Analytics",
-                aspireIssued: "Issued by: Aspire Primo Grad | Date: 16 June 2025 - 26 July 2025",
-                aiFundamentals: "Artificial Intellegence Fundamentals",
-                ibmIssued: "Issued by: IBM | Date: 21 August 2025",
-                artificialIntelligence: "Artificial Intellegence",
-                nyreasIssued: "Issued by: Nyreas Edu Tech | Date: May 2022",
-                getInTouch: "Get In Touch",
-                contactOptions: "Contact Options",
-                phone: "Phone",
-                email: "Email",
-                locationDetail: "Muttembaka, India",
-                availability: "Availability",
-                availabilityDetail: "Mon - Fri, 9AM - 6PM",
-                sendMessage: "Send Message",
                 allRightsReserved: "All Rights Reserved."
             },
             te: {
@@ -2274,79 +1820,6 @@
                 intro2: "నేను అందమైన, రెస్పాన్సివ్ మరియు యూజర్ ఫ్రెండ్లీ వెబ్ అప్లికేషన్లను రూపొందించడంలో నైపుణ్యం కలిగి ఉన్నాను, ఇంటెలిజెంట్ మరియు ప్రభావవంతమైన డిజిటల్ అనుభవాలను నిర్మించడానికి డేటా-డ్రివెన్ ఇన్సైట్లను ఉపయోగిస్తున్నాను.",
                 downloadResume: "రెజ్యూమ్ డౌన్లోడ్ చేయండి",
                 contactMe: "నాతో సంప్రదించండి",
-                aboutMe: "నా గురించి",
-                whoAmI: "నేను ఎవరు?",
-                aboutDesc1: "నేను ఒక ఉత్సాహపూరిత ఫ్రంటెండ్ డెవలపర్ మరియు ఎన్బికెఆర్ ఇన్స్టిట్యూట్ ఆఫ్ సైన్స్ & టెక్నాలజీలో బీటెక్ ఇన్ఫర్మేషన్ టెక్నాలజీ విద్యార్థిని (2022–2026), డేటా అనలిటిక్స్ మరియు ఆర్టిఫిషియల్ ఇంటెలిజెన్స్పై లోతైన ఆసక్తితో నడిపించబడుతున్నాను.",
-                aboutDesc2: "నేను ఇంటరాక్టివ్, రెస్పాన్సివ్ మరియు యూజర్ ఫ్రెండ్లీ వెబ్ అప్లికేషన్లను రూపొందించడం మరియు అభివృద్ధి చేయడం చాలా ఇష్టం, ఇవి క్లీన్ కోడ్ మరియు క్రియేటివ్ డిజైన్ ద్వారా ఆలోచనలను జీవంతో నింపుతాయి.",
-                aboutDesc3: "HTML, CSS, JavaScript, Python, డేటా విజువలైజేషన్ మరియు MySQLలో నైపుణ్యంతో, నేను డేటా మరియు డిజైన్ మధ్య వ్యత్యాసాన్ని తొలగిస్తూ - ఇంటెలిజెంట్, డేటా-డ్రివెన్ డిజిటల్ అనుభవాలను సృష్టిస్తున్నాను.",
-                aboutDesc4: "కొత్త టెక్నాలజీలను అన్వేషించడానికి మరియు కొత్త సవాళ్లను ఎదుర్కోవడానికి ఎప్పుడూ ఆత్రుతగా ఉంటాను, నవీనత, సౌందర్యం మరియు కార్యాచరణను కలపడం ద్వారా ప్రభావవంతమైన పరిష్కారాలను నిర్మించడానికి ప్రయత్నిస్తున్నాను.",
-                aboutDesc5: "నేను కోడింగ్ చేయనప్పుడు, కొత్త టూల్స్ అన్వేషించడం, ఓపెన్-సోర్స్ ప్రాజెక్టులకు సహకరించడం మరియు సాధ్యమయ్యే దాని పరిమితులను మించి నేర్చుకోవడం నాకు ఇష్టం",
-                myDetails: "నా వివరాలు",
-                name: "పేరు",
-                age: "వయస్సు",
-                dob: "పుట్టిన తేదీ",
-                gender: "లింగం",
-                contactDetails: "సంప్రదింపు వివరాలు",
-                location: "ముట్టెంబాక, భారతదేశం",
-                hobbies: "హాబీలు",
-                reading: "చదవడం",
-                coding: "కోడింగ్",
-                gaming: "గేమింగ్",
-                travelling: "ప్రయాణం",
-                music: "సంగీతం",
-                educationalBackground: "విద్యా నేపథ్యం",
-                btech: "ఇన్ఫర్మేషన్ టెక్నాలజీలో బీటెక్",
-                nbkr: "ఎన్.బి.కె.ఆర్ ఇన్స్టిట్యూట్ ఆఫ్ సైన్స్ & టెక్నాలజీ విద్యానగర్",
-                cgpa: "CGPA: 7.32",
-                intermediate: "ఇంటర్మీడియట్",
-                srinivasa: "శ్రీనివాస జూనియర్ కళాశాల విద్యానగర్",
-                percentage: "శాతం: 80.4%",
-                school: "పాఠశాల",
-                balaBharathi: "బాల భారతి ఇఎం హై స్కూల్ విద్యానగర్",
-                gpa: "GPA: 9.8",
-                myFamily: "నా కుటుంబం",
-                father: "తండ్రి",
-                farmer: "రైతు",
-                mother: "తల్లి",
-                homemaker: "గృహిణి",
-                sister: "సోదరి",
-                csStudent: "కంప్యూటర్ సైన్స్ విద్యార్థి",
-                me: "నేను",
-                frontendDeveloper: "ఫ్రంటెండ్ డెవలపర్",
-                mySkills: "నా నైపుణ్యాలు",
-                technicalSkills: "సాంకేతిక నైపుణ్యాలు",
-                frontendSkills: "ఫ్రంటెండ్ నైపుణ్యాలు",
-                backendSkills: "బ్యాకెండ్ నైపుణ్యాలు",
-                toolsDatabase: "టూల్స్ & డేటాబేస్",
-                softSkills: "సాఫ్ట్ స్కిల్స్",
-                problemSolving: "సమస్య పరిష్కారం",
-                communication: "కమ్యూనికేషన్",
-                teamwork: "టీమ్ వర్క్",
-                adaptability: "అనుకూలత",
-                timeManagement: "సమయ నిర్వహణ",
-                creativity: "క్రియేటివిటీ",
-                leadership: "లీడర్షిప్",
-                criticalThinking: "క్రిటికల్ థింకింగ్",
-                myProjects: "నా ప్రాజెక్టులు",
-                project1Desc: "ఒక గ్రోసరీ స్టోర్ కోసం పూర్తిగా రెస్పాన్సివ్ ఇ-కామర్స్ వెబ్సైట్, ఇందులో ఉత్పత్తి క్యాటలాగ్, షాపింగ్ కార్ట్, యూజర్ ఓటెంటికేషన్ మరియు పేమెంట్ ఇంటిగ్రేషన్ ఉంటాయి. సీమ్లెస్ షాపింగ్ అనుభవం కోసం ఆధునిక వెబ్ టెక్నాలజీలతో నిర్మించబడింది.",
-                project2Desc: "హోమ్, అబౌట్, స్కిల్స్, ప్రాజెక్టులు మరియు సర్టిఫికేషన్లను ప్రదర్శించే ఆధునిక, రెస్పాన్సివ్ పోర్ట్ఫోలియో వెబ్సైట్. స్మూత్ యానిమేషన్లు, డార్క్ గ్రీన్ మరియు బ్లాక్ థీమ్ గ్లాస్మోర్ఫిజం బ్యాక్గ్రౌండ్ మరియు అన్ని పరికరాలకు ఆప్టిమైజ్డ్ పనితీరును కలిగి ఉంది.",
-                liveDemo: "లైవ్ డెమో",
-                portfolioWebsite: "పోర్ట్ఫోలియో వెబ్సైట్",
-                myCertifications: "నా సర్టిఫికేషన్లు",
-                dataAnalytics: "డేటా అనలిటిక్స్",
-                aspireIssued: "ఇష్యూడ్ బై: ఆస్పైర్ ప్రిమో గ్రాడ్ | తేదీ: 16 జూన్ 2025 - 26 జులై 2025",
-                aiFundamentals: "ఆర్టిఫిషియల్ ఇంటెలిజెన్స్ ఫండమెంటల్స్",
-                ibmIssued: "ఇష్యూడ్ బై: IBM | తేదీ: 21 ఆగస్టు 2025",
-                artificialIntelligence: "ఆర్టిఫిషియల్ ఇంటెలిజెన్స్",
-                nyreasIssued: "ఇష్యూడ్ బై: నైరియాస్ ఎడు టెక్ | తేదీ: మే 2022",
-                getInTouch: "సంప్రదించండి",
-                contactOptions: "సంప్రదింపు ఎంపికలు",
-                phone: "ఫోన్",
-                email: "ఇమెయిల్",
-                locationDetail: "ముట్టెంబాక, భారతదేశం",
-                availability: "అందుబాటు",
-                availabilityDetail: "సోమ - శుక్ర, 9AM - 6PM",
-                sendMessage: "సందేశం పంపండి",
                 allRightsReserved: "అన్ని హక్కులు ప్రత్యేకించబడినవి."
             }
         };
@@ -2386,11 +1859,20 @@
             }
         }
 
+        // Page transition
+        function navigateToPage(url) {
+            const transition = document.getElementById('pageTransition');
+            transition.classList.remove('fade-out');
+            
+            setTimeout(() => {
+                window.location.href = url;
+            }, 500);
+        }
+
         // Typing Effect
         const typingText = document.getElementById('typing-text');
         const texts = [
             "A Frontend Developer",
-           
         ];
         let textIndex = 0;
         let charIndex = 0;
@@ -2423,97 +1905,16 @@
         }
         
         // Start typing effect when page loads
-        window.addEventListener('load', type);
-        
-        // Certification Carousel
-        const carousel = document.querySelector('.cert-carousel');
-        const prevBtn = document.querySelector('.carousel-prev');
-        const nextBtn = document.querySelector('.carousel-next');
-        const certCards = document.querySelectorAll('.cert-card');
-        let currentIndex = 0;
-        
-        function updateCarousel() {
-            const cardWidth = carousel.offsetWidth;
-            carousel.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-        }
-        
-        nextBtn.addEventListener('click', () => {
-            if (currentIndex < certCards.length - 1) {
-                currentIndex++;
-                updateCarousel();
-            } else {
-                currentIndex = 0;
-                updateCarousel();
-            }
-        });
-        
-        prevBtn.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateCarousel();
-            } else {
-                currentIndex = certCards.length - 1;
-                updateCarousel();
-            }
-        });
-        
-        // Initialize carousel on load
         window.addEventListener('load', () => {
-            updateCarousel();
+            type();
+            // Hide page transition after page loads
+            setTimeout(() => {
+                document.getElementById('pageTransition').classList.add('fade-out');
+            }, 1000);
         });
         
-        // Magical Scroll Transitions
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-        
-        // Observe all sections
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
-        });
-        
-        // Make home section visible immediately
-        document.getElementById('home').classList.add('visible');
-        
-        // Update active nav button on scroll
+        // Show/hide back to top button
         window.addEventListener('scroll', () => {
-            let current = '';
-            const sections = document.querySelectorAll('section');
-            const navButtons = document.querySelectorAll('.nav-btn');
-            const mobileNavButtons = document.querySelectorAll('.mobile-nav-btn');
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (scrollY >= (sectionTop - 200)) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navButtons.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('href') === `#${current}`) {
-                    btn.classList.add('active');
-                }
-            });
-            
-            mobileNavButtons.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('href') === `#${current}`) {
-                    btn.classList.add('active');
-                }
-            });
-            
-            // Show/hide back to top button
             const backToTop = document.getElementById('backToTop');
             if (window.scrollY > 500) {
                 backToTop.classList.add('visible');
@@ -2555,7 +1956,12 @@
         
         // Close mobile menu when clicking a nav button
         mobileNavButtons.forEach(btn => {
-            btn.addEventListener('click', closeMobileMenu);
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetPage = btn.getAttribute('href');
+                closeMobileMenu();
+                navigateToPage(targetPage);
+            });
         });
 
         // Settings Menu Functionality
@@ -2677,55 +2083,55 @@
                 title: "About Me", 
                 description: "Learn more about Nikhil Dandolu", 
                 icon: "fas fa-user",
-                page: "#about"
+                page: "about.html"
             },
             { 
                 title: "Skills", 
                 description: "Technical and soft skills", 
                 icon: "fas fa-code",
-                page: "#skills"
+                page: "skills.html"
             },
             { 
                 title: "Projects", 
                 description: "Portfolio projects and work", 
                 icon: "fas fa-project-diagram",
-                page: "#projects"
+                page: "projects.html"
             },
             { 
                 title: "Certifications", 
                 description: "Professional certifications", 
                 icon: "fas fa-certificate",
-                page: "#certifications"
+                page: "certifications.html"
             },
             { 
                 title: "Contact", 
                 description: "Get in touch with Nikhil", 
                 icon: "fas fa-envelope",
-                page: "#contact"
+                page: "contact.html"
             },
             { 
                 title: "Frontend Development", 
                 description: "HTML, CSS, JavaScript, React", 
                 icon: "fab fa-html5",
-                page: "#skills"
+                page: "skills.html"
             },
             { 
                 title: "Data Analytics", 
                 description: "Python, Power BI, Excel", 
                 icon: "fas fa-chart-bar",
-                page: "#skills"
+                page: "skills.html"
             },
             { 
                 title: "Portfolio Website", 
                 description: "Personal portfolio project", 
                 icon: "fas fa-laptop-code",
-                page: "#projects"
+                page: "projects.html"
             },
             { 
                 title: "Grocery Store", 
                 description: "E-commerce website project", 
                 icon: "fas fa-shopping-cart",
-                page: "#projects"
+                page: "projects.html"
             }
         ];
 
@@ -2751,7 +2157,7 @@
                             </div>
                         `;
                         resultElement.addEventListener('click', () => {
-                            window.location.href = result.page;
+                            navigateToPage(result.page);
                             searchModal.classList.remove('active');
                             searchInput.value = '';
                             searchResults.innerHTML = '';
@@ -2766,23 +2172,32 @@
             }
         });
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });  
+        // Navigation links functionality
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            if (btn.getAttribute('href') && btn.getAttribute('href') !== '#') {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetPage = btn.getAttribute('href');
+                    if (targetPage !== window.location.pathname.split('/').pop()) {
+                        navigateToPage(targetPage);
+                    }
+                });
+            }
+        });
+
+        // Set active navigation based on current page
+        function setActiveNavigation() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            document.querySelectorAll('.nav-btn, .mobile-nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('href') === currentPage) {
+                    btn.classList.add('active');
                 }
             });
-        });
+        }
+
+        // Initialize active navigation
+        setActiveNavigation();
     </script>
 </body>
 </html>
